@@ -3,37 +3,40 @@ import pygame
 
 class Game:
     def __init__(self):
+        # Intialize game variables
         pygame.init()
-        pygame.display.set_caption("Pong", "Pong")
-        self.screen = pygame.display.set_mode([700, 500]) #set display resolution
+        pygame.display.set_caption("Pong", "Pong") # Name window title to Pong
+        self.screen = pygame.display.set_mode([700, 500]) # Set display resolution
         self.clock = pygame.time.Clock()
         
+        #Left Paddle
         self.paddleA = Paddle("WHITE", 10, 100)
         self.paddleA.rect.x = 20
         self.paddleA.rect.y = 200
         
+        #Right Paddle
         self.paddleB = Paddle("WHITE", 10, 100)
         self.paddleB.rect.x = 670
         self.paddleB.rect.y = 200
         
+        #Group sprites
         self.all_sprites_list = pygame.sprite.Group()
         self.all_sprites_list.add(self.paddleA)
         self.all_sprites_list.add(self.paddleB)
         
-        self.running = True
-        
-    def ProcessInput(self):
+        self.running = True # running state of the game
+    
+    def ProcessInput(self): # Responsible for game events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
         
-    def UpdateGame(self):
+    def UpdateGame(self): # Updates game variables/conditions
         self.all_sprites_list.update()
         self.clock.tick(60)
 
-    def GenerateOutput(self):
-         # Fill the background with white   
-        self.screen.fill("BLACK")
+    def GenerateOutput(self): # Updates the display
+        self.screen.fill("BLACK") # Fill the background with black  
 
         pygame.draw.circle(self.screen, "YELLOW", (400, 250), 8)
         pygame.draw.line(self.screen, "WHITE", [349, 0], [349, 500], 5)
@@ -42,8 +45,7 @@ class Game:
         # Flip the display
         pygame.display.flip()
         
-    
-    def RunLoop(self):
+    def RunLoop(self): #Runs in game processes in a loop
         while self.running:
             self.ProcessInput()
             self.UpdateGame()
