@@ -6,7 +6,7 @@ class Game:
         # Intialize game variables
         pygame.init()
         pygame.display.set_caption("Pong", "Pong") # Name window title to Pong
-        self.screen = pygame.display.set_mode([700, 500]) # Set display resolution
+        self.screen = pygame.display.set_mode([700, 500]) # Set display resolution (w x h)
         self.clock = pygame.time.Clock()
         
         #Left Paddle
@@ -28,8 +28,19 @@ class Game:
     
     def ProcessInput(self): # Responsible for game events
         for event in pygame.event.get():
+            keys = pygame.key.get_pressed() # Get the key currently being pressed
             if event.type == pygame.QUIT:
                 self.running = False
+            #Paddle Controls
+            if keys[pygame.K_w]:
+                self.paddleA.moveUp(5)
+            if keys[pygame.K_s]:
+                self.paddleA.moveDown(5)
+            if keys[pygame.K_UP]:
+                self.paddleB.moveUp(5)
+            if keys[pygame.K_DOWN]:
+                self.paddleB.moveDown(5)
+            
         
     def UpdateGame(self): # Updates game variables/conditions
         self.all_sprites_list.update()
