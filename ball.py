@@ -7,11 +7,11 @@ class Ball(pygame.sprite.Sprite):
         
         # Pass in the color of the paddle, its width and height.
         # Set the background color and set it to be transparent
-        self.image = pygame.Surface([width + radius, height + radius]) #radius extends the current width and height of the canvas
+        self.image = pygame.Surface([width + radius, height + radius]) # Radius extends the current width and height of the canvas
         self.image.fill("BLACK")
         self.image.set_colorkey("BLACK")
 
-        self.velocity = 2
+        self.velocity = 2 # Velocity for ball speed on x-axis and y-axis
         self.xVelocity = self.velocity 
         self.yVelocity = self.velocity
 
