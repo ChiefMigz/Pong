@@ -135,9 +135,9 @@ class Game:
         
         pygame.display.flip() # Flip the display
         
-    def MainLoop(self): #Runs in game processes in a loop
-        while self.isRunning:
+    def MainLoop(self): # Runs in game processes in a loop
+        while self.isRunning: # Keep on doing these proccess until the game exits
             self.ProcessInput()
             self.UpdateGame()
             self.GenerateOutput()
-        pygame.quit()
+        pygame.quit() # Close the game
