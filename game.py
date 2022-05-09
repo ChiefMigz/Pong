@@ -2,6 +2,7 @@ import pygame
 from paddle import Paddle
 from ball import Ball
 from random import choice
+import collision
 
 class Game:
     def __init__(self):
@@ -78,8 +79,7 @@ class Game:
         self.ball.rect.y += -self.ball.yVelocity # Move ball on y-axis
 
         # When ball goes out on either left or right side (out of bounds)
-        if self.ball.rect.x > self.SCREEN_WIDTH: # When ball went out on right side, left paddle gains score
-          # Reset the ball's position by placing the ball on the center of the scene
+        if collision.isTouchingRightWall(self):
           self.ball.rect.x = self.SCREEN_WIDTH // 2
           self.ball.rect.y = self.SCREEN_HEIGHT // 2
           # Launch the ball in a random direction (makes it fun)
@@ -90,9 +90,7 @@ class Game:
           self.leftPaddleScoreText = self.font.render("Player 1: " + str(self.leftPaddleScore), True, "WHITE", "BLACK")
           self.leftPaddleScoreTextRect = self.leftPaddleScoreText.get_rect()
           self.leftPaddleScoreTextRect.center = (self.SCREEN_WIDTH / 4, 40)
-    
-        if self.ball.rect.x < 0: # When ball went out on left side, right paddle gains score
-          # Reset the ball's position by placing the ball on the center of the scene
+        if collision.isTouchingLeftWall(self):
           self.ball.rect.x = self.SCREEN_WIDTH // 2
           self.ball.rect.y = self.SCREEN_HEIGHT // 2
           # Launch the ball in a random direction (makes it fun)
@@ -131,6 +129,7 @@ class Game:
         self.screen.blit(self.rightPaddleScoreText, self.rightPaddleScoreTextRect) # Render right paddle score
 
         pygame.draw.line(self.screen, "WHITE", [349, 0], [349, 500], 5) # Draw the line that divides the two paddles
+        pygame.draw.line(self.screen, "WHITE", [0, self.SCREEN_HEIGHT], [self.SCREEN_WIDTH, self.SCREEN_HEIGHT], 10)
         self.all_sprites_list.draw(self.screen) # Render sprites in game
         
         pygame.display.flip() # Flip the display
