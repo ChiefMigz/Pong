@@ -72,7 +72,6 @@ class Game:
                 if keys2[pygame.K_DOWN]:
                     self.paddleB.moveDown(10)
             
-        
     def UpdateGame(self): # Updates game variables/conditions
         # Move the ball every frame in regard to velocity
         self.ball.rect.x += -self.ball.xVelocity # Move ball on x-axis
@@ -90,6 +89,7 @@ class Game:
           self.leftPaddleScoreText = self.font.render("Player 1: " + str(self.leftPaddleScore), True, "WHITE", "BLACK")
           self.leftPaddleScoreTextRect = self.leftPaddleScoreText.get_rect()
           self.leftPaddleScoreTextRect.center = (self.SCREEN_WIDTH / 4, 40)
+
         if collision.isTouchingLeftWall(self):
           self.ball.rect.x = self.SCREEN_WIDTH // 2
           self.ball.rect.y = self.SCREEN_HEIGHT // 2
@@ -103,23 +103,21 @@ class Game:
           self.rightPaddleScoreTextRect.center = (self.SCREEN_WIDTH / 1.3, 40)
         
         # Wall collisions
-        if self.ball.rect.y > self.SCREEN_HEIGHT: # Bottom screen collision
+        if collision.isTouchingBottomWall(self): # Bottom screen collision
             self.ball.yVelocity *= -1 # Shift vertical direction
 
-        if self.ball.rect.y < 0: # Upper screen collision
+        if collision.isTouchingTopWall(self): # Upper screen collision
             self.ball.yVelocity *= -1 # Shift vertical direction
         
         # When ball hits one of the paddles
-        if self.paddleA.rect.y < self.ball.rect.y and self.paddleA.rect.y + self.paddleA.height > self.ball.rect.y and \
-             self.paddleA.rect.x > self.ball.rect.x and self.paddleA.rect.x - self.paddleA.width < self.ball.rect.x: # Left paddle collision
+        if collision.isTouchingLeftPaddle(self):
             self.ball.xVelocity *= -1 # When left paddle collides with ball, shift x direction
             self.ball.yVelocity *= choice((-1,1))
 
-        if self.paddleB.rect.y < self.ball.rect.y and self.paddleB.rect.y + self.paddleB.height > self.ball.rect.y and \
-             self.paddleB.rect.x > self.ball.rect.x and self.paddleB.rect.x - self.paddleB.width < self.ball.rect.x: # Right paddle collision
+        if collision.isTouchingRightPaddle(self): # Right paddle collision
             self.ball.xVelocity *= -1 # When left paddle collides with ball, shift x direction
             self.ball.yVelocity *= choice((-1,1))
-        self.all_sprites_list.update() # Updates all sprites in list
+        self.all_sprites_list.update() # Updates all sprites in lists
         self.clock.tick(60) # Frame rate control
 
     def GenerateOutput(self): # Updates the graphics in the game
