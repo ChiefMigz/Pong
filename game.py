@@ -128,6 +128,8 @@ class Game:
 
         pygame.draw.line(self.screen, "WHITE", [349, 0], [349, 500], 5) # Draw the line that divides the two paddles
         pygame.draw.line(self.screen, "WHITE", [0, self.SCREEN_HEIGHT], [self.SCREEN_WIDTH, self.SCREEN_HEIGHT], 10)
+        pygame.draw.line(self.screen, "WHITE", [0, 0], [self.SCREEN_WIDTH, 0], 10)
+        pygame.draw.line(self.screen, "WHITE", [0, self.SCREEN_HEIGHT], [self.SCREEN_WIDTH, self.SCREEN_HEIGHT], 10)
         self.all_sprites_list.draw(self.screen) # Render sprites in game
         
         pygame.display.flip() # Flip the display
